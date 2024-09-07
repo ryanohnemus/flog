@@ -1,4 +1,4 @@
-module github.com/mingrammer/flog
+module github.com/ryanohnemus/flog
 
 go 1.20
 
