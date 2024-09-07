@@ -23,6 +23,8 @@ const (
 	CommonLogFormat = "%s - %s [%s] \"%s %s %s\" %d %d"
 	// JSONLogFormat : {"host": "{host}", "user-identifier": "{user-identifier}", "datetime": "{datetime}", "method": "{method}", "request": "{request}", "protocol": "{protocol}", "status", {status}, "bytes": {bytes}, "referer": "{referer}"}
 	JSONLogFormat = `{"host":"%s", "user-identifier":"%s", "datetime":"%s", "method": "%s", "request": "%s", "protocol":"%s", "status":%d, "bytes":%d, "referer": "%s"}`
+	// JSONSequentialLogFormat
+	JSONSequentialLogFormat = `{"datetime":"%s", "message": "this is line number %d"}`
 )
 
 // NewApacheCommonLog creates a log string with apache common log format
@@ -129,5 +131,17 @@ func NewJSONLogFormat(t time.Time) string {
 		gofakeit.StatusCode(),
 		gofakeit.Number(0, 30000),
 		gofakeit.URL(),
+	)
+}
+
+// NewJSONLogFormat creates a log string with json log format
+var JSONSequentialLogFormatCounter int = 0
+
+func NewJSONSequentialLogFormat(t time.Time) string {
+	JSONSequentialLogFormatCounter++
+	return fmt.Sprintf(
+		JSONSequentialLogFormat,
+		t.Format(RFC5424),
+		JSONSequentialLogFormatCounter,
 	)
 }
